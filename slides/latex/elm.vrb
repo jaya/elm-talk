@@ -1,0 +1,20 @@
+\frametitle{Exemplo}
+	\begin{minted}{elm}
+
+		getAppState : Cmd Msg
+		getAppState =
+			let req = Http.get "api.webpage.com/states/" decodeModel
+			in Http.send req ModelFromServer
+
+		type Msg =
+			...
+			| ModelFromServer (Result Http.Error Model)
+
+		update msg model =
+			case msg of
+				...
+				ClickRestore -> (model, getAppState)
+				ModelFromServer (Ok mod) -> (mod, Cmd.none)
+				ModelFromServer (Err err) -> ...
+
+	\end{minted}
